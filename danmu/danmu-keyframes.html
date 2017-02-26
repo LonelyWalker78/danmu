@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			html {
+				filter: alpha(opacity=100);
+				-moz-opacity: 1;
+				opacity: 1;
+			}
+			
+			body {
+				background-color: transparent;
+				overflow-x: hidden;
+				overflow-y: hidden;
+			}
+			
+			html,
+			body {
+				margin: 0px;
+				padding: 0px;
+				width: 100%;
+				height: 100%;
+				font-size: 80%;
+			}
+			
+			.boxDom {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			
+			.string {
+				height: 1.1em;
+				position: absolute;
+				font-size: 4em;
+				line-height: 1.1em;
+				cursor: pointer;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			#record {
+				height: 1.1em;
+			}
+		</style>
+		<style id=dynamic></style>
+	</head>
+
+	<body>
+		<div id="record" style="display: none;"></div>
+		<div class="boxDom" id="boxDom"></div>
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+			var pageW = parseInt($("html").width());
+			var pageH = parseInt($("html").height());
+			var boxDom = $("#boxDom");
+			var Top;
+			var duration = 10;
+			var textColor;
+			var fontFamily = "微软雅黑";
+			var fontWeight;
+			send();
+			//Danmu("红红火火恍恍惚惚红红火火恍恍惚惚");
+			function send() {
+				setTimeout(function() {
+					Danmu("红红火火恍恍惚惚红红火火恍恍惚惚");
+					send();
+				}, 500);
+			};
+			function Danmu(strText) {
+				var creSpan = $("<div class='string'></div>");
+				creSpan.text(strText);
+				Top = parseInt(pageH * (Math.random()));
+				if(Top > pageH - 4 * parseInt($('#record').css('height'))) {
+					Top = (pageH - 4 * parseInt($('#record').css('height'))) * (Math.random());
+				}
+				creSpan.css({
+					"top": Top,
+					"left": pageW,
+					"color": textColor ? textColor : getRandomColor(),
+					"fontFamily": fontFamily ? fontFamily : "Timers",
+					"fontWeight": fontWeight ? fontWeight : "bold"
+				});
+				boxDom.append(creSpan);
+				var spanDom = document.querySelector("#boxDom>div:last-child");
+				var translateW = pageW + $("#boxDom>div:last-child").width();
+				var style = document.getElementById("dynamic")
+    			style.innerHTML = '@-webkit-keyframes hPMBMafziBSEheRYi{100%{-webkit-transform: translate(-'+translateW+'px,0);}}\n'
+    					+ '@keyframes hPMBMafziBSEheRYi{100%{transform: translate(-'+translateW+'px,0);}}';
+    			spanDom.style.webkitAnimation="hPMBMafziBSEheRYi linear " + duration + "s";
+    			spanDom.style.animation="hPMBMafziBSEheRYi linear " + duration + "s";
+				spanDom.addEventListener("webkitAnimationEnd", function() {
+    				this.parentNode.removeChild(this);
+				});
+			};
+			/* time---second---int */
+			function setDuration(time) {
+				if(time) {
+					duration = time;
+				}
+			};
+			/* color---string */
+			function setColor(color) {
+				if(color) {
+					textColor = color;
+				}
+			};
+			/* fontfamily---string */
+			function setfontFamily(fontfamily) {
+				if(fontfamily) {
+					fontFamily = fontfamily;
+				}
+			};
+			/* fontsize---percent---int */
+			function setfontSize(fontsize) {
+				if(fontsize) {
+					$('html').css('font-size', fontsize + "%");
+					$('body').css('font-size', fontsize + "%");
+				}
+			};
+			/* fontweight---string---normal,bold,bolder,lighter */
+			function setfontWeight(fontweight) {
+				if(fontweight) {
+					fontWeight = fontweight;
+				}
+			};
+
+			function getRandomColor() {
+				return '#' + (function(h) {
+					return new Array(7 - h.length).join("0") + h
+				})((Math.random() * 0x1000000 << 0).toString(16));
+			};
+		</script>
+	</body>
+
+</html>

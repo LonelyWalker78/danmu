@@ -1,1 +1,1 @@
-# danmu
+# 基于JQuery的animate、HTML5的canvas标签、HTML5的keyframes规则，三种方式的弹幕实现
